@@ -1,0 +1,220 @@
+---
+title: 'Investigation #2: A Real (Computing) Cluster'
+author: "Your names here"
+format: pdf
+echo: true
+---
+
+```{r}
+#| include: false
+options(scipen=999)  # turns off scientific notation
+set.seed(    0    )  # set your own seed!
+```
+
+A computing cluster is shared by 250 independent subscribers. Each day, the probability any particular subscriber uses the cluster is 0.3. The number of tasks submitted by a user to the cluster can be modeled by a geometric distribution with a mean of 6.5. The time that it takes the cluster to complete a task can be modeled by an exponential distribution with mean 2.8 minutes. Completion times are also independent.
+
+------------------------------------------------------------------------
+
+Before you write any code, let's reason out some values that you can use later to validate your simulation. These are arithmetic questions; no R code is required. 
+
+### 1. What is the expected number of tasks submitted in a day?
+
+<!-- Write your arithmetic here. -->
+
+
+
+
+
+
+### 2. What is the expected amount of time required to complete all the day's tasks?
+
+<!-- Write your arithmetic here. -->
+
+
+
+
+
+------------------------------------------------------------------------
+
+Now you will write code to simulate one day’s worth of tasks, in order to answer the questions below. Notice that the model has three random variables, and they're *nested*: the number of tasks depends on the number of users that day, and the time to complete all tasks depends on the total number of tasks submitted.
+
+Your main function, `cluster()`, will have no inputs; you may hard-code the parameters 250, 0.3, 6.5, and 2.8. Your function must return the values of **two** variables: *X = the total number of tasks submitted*, and *Y = the total amount of time required to complete all tasks*.
+
+After that, the output of your Repeat step should consist of two sets of numbers: the simulated values for *X* and the simulated values for *Y*.
+
+Don't worry about unfinished tasks “bleeding over” into the next day; you are simulating independent days. Equivalently, assume each day starts fresh, with zero tasks queued up.
+
+Two very important notes:
+
+-   Everything in `cluster()` must be **vectorized**. There should be no *for* loops in your code.
+
+-   R's parameterization of the geometric distribution is different. You will need to adjust for it accordingly. You have been warned.
+
+------------------------------------------------------------------------
+
+<!-- Place your Build function and Repeat code in the code chunk below. -->
+
+```{r Build and Repeat Steps}
+
+# Build
+
+cluster <- function(){
+  
+}
+
+
+# Repeat
+
+
+```
+
+------------------------------------------------------------------------
+
+Use the output of the previous code chunk to answer the following questions. You should only run that code chunk once.
+
+### 3. Create a well-labeled histogram of 100,000 values of the variable *X = number of tasks submitted in a day*. Summarize the distribution (shape, center, spread) in complete sentences.
+
+```{r Histogram of X}
+
+
+```
+
+<!-- Your written summary goes below this line. -->
+
+
+
+
+
+### 4. Calculate and interpret a 95% confidence interval for the probability that more than 500 tasks are submitted in a day.
+
+```{r CI Prob 1}
+
+```
+
+### 5. Calculate and interpret a 95% confidence interval for the mean number of tasks submitted in a day. Also comment on whether this interval is consistent with the common-sense answer from earlier.
+
+```{r CI mu_X}
+
+```
+
+<!-- Your written summary goes below this line. -->
+
+
+
+
+
+### 6. Calculate a 95% confidence interval for the standard deviation of the number of tasks submitted in a day.
+
+When $n$ is very large and the distribution of $X$ is approximately normal, a 95% CI for the variance $\sigma^2_X$ has endpoints
+
+$$\frac{s^2}{1 \pm 1.96 \sqrt{2/(n-1)}}$$ where $s$ is the sample standard deviation. A 95% CI for $\sigma_X$ results from taking the square root of the two endpoints.
+
+You must **write a function** that takes in a numerical vector and outputs the two endpoints for the 95% CI for $\sigma_X$. Execute your function to print out the CI (inside the code chunk is fine). No interpretation required.
+
+```{r CI sigma_X}
+
+```
+
+<!-- Your written summary goes below this line. -->
+
+
+
+
+
+### 7. Calculate and interpret a 95% prediction interval for a single future value of the number of tasks submitted in a day.
+
+When the distribution of $X$ is approximately normal, a 95% PI is given by $$\bar{x} \pm 1.96 \cdot s \cdot \sqrt{1 + \frac{1}{n}}$$ This formula is superior to (more reliable than) the quantile method used in the previous investigation, but it's only valid for normal distributions.
+
+You must **write a function** that takes in a numerical vector and outputs the two endpoints for this 95% PI. Make sure you include an interpretation!
+
+```{r PI X}
+
+```
+
+<!-- Your written summary goes below this line. -->
+
+
+
+
+------------------------------------------------------------------------
+
+### 8. Create a well-labeled histogram of 100,000 values of the variable *Y = time to complete a day’s worth of tasks*. Summarize the distribution (shape, center, spread) in complete sentences.
+
+```{r Histogram of Y}
+
+```
+
+<!-- Your written summary goes below this line. -->
+
+
+
+
+
+### 9. Calculate and interpret a 95% confidence interval for the probability that a day’s worth of tasks can be completed within 24 hours.
+
+```{r CI Prob 2}
+
+```
+
+<!-- Your written summary goes below this line. -->
+
+
+
+
+
+### 10. Calculate and interpret a 95% confidence interval for the mean completion time for a day’s worth of tasks. Also comment on whether this interval is consistent with the common-sense answer from earlier.
+
+```{r CI mu_Y}
+
+```
+
+<!-- Your written summary goes below this line. -->
+
+
+
+
+
+### 11. Calculate a 95% confidence interval for the standard deviation of the time to complete a day’s worth of tasks.
+
+Use your earlier function to perform the calculation. No interpretation required.
+
+```{r}
+
+```
+
+### 12. Calculate and interpret a 95% prediction interval for a single future value of the time to complete a day’s worth of tasks.
+
+Use your earlier function to perform the calculation. Don't forget the interpretation!
+
+```{r}
+
+```
+
+<!-- Your written summary goes below this line. -->
+
+
+
+
+
+------------------------------------------------------------------------
+
+Finally, since you've simulated *two* variables, it makes sense to explore the *relationship* between them.
+
+### 13. Create a well-labeled *scatterplot* of the two variables. Describe what you see (direction, form, strength) in complete sentences, and explain why this makes sense.
+
+```{r Scatterplot}
+
+```
+
+<!-- Your written summary goes below this line. -->
+
+
+
+
+### 14. Use your simulation to calculate a 95% confidence interval for the probability that more than 500 tasks are submitted in a day *and* that those tasks can be completed within 24 hours.
+
+Note: that's a single event, not two separate questions. No interpretation required.
+
+```{r CI Prob 3}
+
+```
