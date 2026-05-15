@@ -83,26 +83,28 @@ main = "Tasks Submitted in One Day")
 
 <!-- Your written summary goes below this line. -->
 
-This histogram has a normal distribution which can be seen by its singular peak in the center and approximately symmetrical spread, forming a bell shape curve. Of the 100,000 values of the variable X = number of tasks submitted in a day, the most common outcome (the center) is the range of 550-600 tasks being submitted in one day, with a frequency of approximately 23,000 values falling into that range. The number of tasks completed in a day falls almost entirely between 300 and 900 for each generated value.
+This histogram has a normal distribution which can be seen by its singular peak in the center and approximately symmetrical spread, forming a bell shape curve. Of the 100,000 values of the variable X = number of tasks submitted in a day, the mean tasks being submitted in one day is `r round(mean(X),1)`. The standard deviation of tasks completed in a day is `r round(sd(X),1)`.
 
 ### 4. Calculate and interpret a 95% confidence interval for the probability that more than 500 tasks are submitted in a day.
 
 ```{r CI Prob 1}
 over_500 <- as.numeric(X > 500) 
 t.test(over_500, conf.level = 0.95)
+CI <- t.test(over_500, conf.level = 0.95)
 ```
 
-The 95% confidence interval for there being more than 500 tasks submitted in a day is \[0.7699017, 0.7750983\]. We are 95% confident that on any given day, the probability of the number of tasks submitted being over 500 is between 76.99% and 77.51%.
+The 95% confidence interval for there being more than 500 tasks submitted in a day is (`r CI$conf.int`). We are 95% confident that on any given day, the probability of the number of tasks submitted being over 500 is in (`r CI$conf.int`).
 
 ### 5. Calculate and interpret a 95% confidence interval for the mean number of tasks submitted in a day. Also comment on whether this interval is consistent with the common-sense answer from earlier.
 
 ```{r CI mu_X}
 t.test(X, conf.level = 0.95) 
+CI2 <- t.test(X, conf.level = 0.95) 
 ```
 
 <!-- Your written summary goes below this line. -->
 
-The 95% confidence interval for the mean number of tasks submitted in a day is \[561.8565, 562.8640\]. We are 95% confident that on any given day, the mean number of tasks submitted will be between 561.8565 and 562.8640. We calculated the expected value of tasks submitted in a day to be 487.5, which is inconsistent with this confidence interval based on the simulation.
+The 95% confidence interval for the mean number of tasks submitted in a day is (`r CI2$conf.int`). We are 95% confident that on any given day, the mean number of tasks submitted will be in (`r CI2$conf.int`). We calculated the expected value of tasks submitted in a day to be 487.5, which is inconsistent with this confidence interval based on the simulation.
 
 ### 6. Calculate a 95% confidence interval for the standard deviation of the number of tasks submitted in a day.
 
@@ -113,22 +115,24 @@ $$\frac{s^2}{1 \pm 1.96 \sqrt{2/(n-1)}}$$ where $s$ is the sample standard devia
 You must **write a function** that takes in a numerical vector and outputs the two endpoints for the 95% CI for $\sigma_X$. Execute your function to print out the CI (inside the code chunk is fine). No interpretation required.
 
 ```{r CI sigma_X}
-sigma_ci <- function(x){
-  n <- length(x)
-  s <- sd(x)
+sigma_ci <- function(X){
+  n <- length(X)
+  s <- sd(X)
   
   lower <- (s^2)/(1+1.96*sqrt(2/(n-1)))
   upper <- (s^2)/(1-1.96*sqrt(2/(n-1)))
   
-  return(sqrt(c(lower, upper)))
+  CI3 <- (sqrt(c(lower, upper)))
+  return(CI3)
 }
 
 sigma_ci(X)
+CI3 <- sigma_ci(X)
 ```
 
 <!-- Your written summary goes below this line. -->
 
-The 95% confidence interval for the standard deviation of the number of tasks submitted in a day is \[80.92526, 81.63774\].
+The 95% confidence interval for the standard deviation of the number of tasks submitted in a day is (`r round(CI3,4)`).
 
 ### 7. Calculate and interpret a 95% prediction interval for a single future value of the number of tasks submitted in a day.
 
@@ -143,15 +147,18 @@ pred_int <- function(x){
   s <- sd(x)
   lower <- xbar-1.96*s*sqrt(1+1/n)
   upper <- xbar+1.96*s*sqrt(1+1/n)
-  return(c(lower, upper))
+  
+  PI <- c(lower, upper)
+  return(PI)
 }
 
 pred_int(X)
+PI <- pred_int(X)
 ```
 
 <!-- Your written summary goes below this line. -->
 
-The 95% prediction interval for a single future value of the number of tasks submitted in a day is \[403.0523, 721.6682\]. We are 95% confident that a single future value of the number of tasks submitted in a day will be between 403.0523 and 721.6682.
+The 95% prediction interval for a single future value of the number of tasks submitted in a day is (`r round(PI,4)`). We are 95% confident that a single future value of the number of tasks submitted in a day will be in (`r round(PI,4)`).
 
 ------------------------------------------------------------------------
 
@@ -166,28 +173,31 @@ main = "Time to Complete Tasks in One Day")
 
 <!-- Your written summary goes below this line. -->
 
-This histogram has a normal distribution which can be seen by its singular peak in the center and approximately symmetrical spread, forming a bell shape curve. Of the 100,000 values of the variable Y = time to complete a day's worth of tasks, the most common outcome (the center) is the range of 1500 to 1600 minutes, with a frequency of approximately 17,000 values falling into that range. The total time required to complete tasks in a day falls almost entirely between 800 and 2500 for each generated value.
+This histogram has a normal distribution which can be seen by its singular peak in the center and approximately symmetrical spread, forming a bell shape curve. Of the 100,000 values of the variable Y = time to complete a day's worth of tasks, the mean time to complete a day's worth of tasks is `r round(mean(Y),1)`. The standard deviation of time to complete a day's worth of tasks is `r round(sd(Y),1)`.
 
 ### 9. Calculate and interpret a 95% confidence interval for the probability that a day’s worth of tasks can be completed within 24 hours.
 
 ```{r CI Prob 2}
 within_24 <- as.numeric(Y < 1440) 
 t.test(within_24, conf.level = 0.95) 
+CI4 <- t.test(within_24, conf.level = 0.95) 
 ```
 
 <!-- Your written summary goes below this line. -->
 
-The 95% confidence interval for the probability that a day's worth of tasks can be completed in 24 hours is \[0.2901691, 0.2958109\]. We are 95% confident that on any given day, the probability that a day's worth of tasks can be completed in 24 hours is between 29.02% and 29.58%.
+The 95% confidence interval for the probability that a day's worth of tasks can be completed in 24 hours is (`r CI4$conf.int`). We are 95% confident that on any given day, the probability that a day's worth of tasks can be completed in 24 hours is in (`r CI4$conf.int`).
+
 
 ### 10. Calculate and interpret a 95% confidence interval for the mean completion time for a day’s worth of tasks. Also comment on whether this interval is consistent with the common-sense answer from earlier.
 
 ```{r CI mu_Y}
 t.test(Y, conf.level = 0.95) 
+CI5 <- t.test(Y, conf.level = 0.95) 
 ```
 
 <!-- Your written summary goes below this line. -->
 
-The 95% confidence interval for the mean completion time for a day’s worth of tasks is \[1572.775, 1575.713\]. We are 95% confident that on any given day, the mean completion time for a day’s worth of tasks will be between 1572.775 and 1575.713 minutes. We calculated the expected amount of time required to complete all the day's tasks to be 1365 minutes, which is inconsistent with this confidence interval based on the simulation.
+The 95% confidence interval for the mean completion time for a day’s worth of tasks is (`r CI5$conf.int`). We are 95% confident that on any given day, the mean completion time in minutes for a day’s worth of tasks will be in (`r CI5$conf.int`). We calculated the expected amount of time required to complete all the day's tasks to be 1365 minutes, which is inconsistent with this confidence interval based on the simulation.
 
 ### 11. Calculate a 95% confidence interval for the standard deviation of the time to complete a day’s worth of tasks.
 
@@ -195,9 +205,10 @@ Use your earlier function to perform the calculation. No interpretation required
 
 ```{r}
 sigma_ci(Y)
+CI6 <- sigma_ci(Y)
 ```
 
-The 95% confidence interval for the standard deviation of the completion time for a day’s worth of tasks is \[235.9722, 238.0497\].
+The 95% confidence interval for the standard deviation of the completion time in minutes for a day’s worth of tasks is (`r round(CI6,4)`).
 
 ### 12. Calculate and interpret a 95% prediction interval for a single future value of the time to complete a day’s worth of tasks.
 
@@ -205,11 +216,12 @@ Use your earlier function to perform the calculation. Don't forget the interpret
 
 ```{r}
 pred_int(Y) 
+PI2 <- pred_int(Y) 
 ```
 
 <!-- Your written summary goes below this line. -->
 
-The 95% prediction interval for a single future value of the completion time for a day’s worth of tasks is \[1109.713, 2038.774\]. We are 95% confident that a single future value of the completion time for a day’s worth of tasks will be between 1109.713 and 2038.774 minutes.
+The 95% prediction interval for a single future value of the completion time for a day’s worth of tasks is (`r round(PI2,4)`). We are 95% confident that a single future value of the completion time in minutes for a day’s worth of tasks will be in (`r round(PI2,4)`).
 
 ------------------------------------------------------------------------
 
@@ -235,6 +247,7 @@ Note: that's a single event, not two separate questions. No interpretation requi
 ```{r CI Prob 3}
 event <- as.numeric(X > 500 & Y < 1440) 
 t.test(event, conf.level = 0.95) 
+CI7 <- t.test(event, conf.level = 0.95) 
 ```
 
-The 95% confidence interval for the probability that more than 500 tasks are submitted in a day and that they can be completed in 24 hours is \[0.07734795, 0.08069205\].
+The 95% confidence interval for the probability that more than 500 tasks are submitted in a day and that they can be completed in 24 hours is (`r CI7$conf.int`).
